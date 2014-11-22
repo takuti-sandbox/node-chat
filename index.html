@@ -25,6 +25,14 @@
       socket.emit('chat message', msg);
       return false;
     });
+    $('#m').keyup(function() {
+      if ($(this).val()) {
+        socket.emit('typing', true);
+      } else {
+        socket.emit('typing', false);
+      }
+      return false;
+    });
     $('#name').keypress(function(e) {
       if (e.which == 13) {
         socket.emit('enter', $('#n').val());
@@ -34,6 +42,14 @@
     });
     socket.on('chat message', function(msg) {
       $('#messages').append($('<li>').text(msg));
+    });
+    socket.on('typing', function(name, is) {
+      slctr = $('.' + name + '.typing');
+      if (!is && slctr[0]) {
+        slctr.remove();
+      } else if (!slctr[0]) {
+        $('#messages').append($("<li class=\""+ name +" typing\">").text(name + 'is typing...'));
+      }
     });
   </script>
 </html>

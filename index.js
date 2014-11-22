@@ -12,7 +12,7 @@ app.get('/style.css', function(req, res) {
 
 io.on('connection', function(socket) {
   socket.on('enter', function(name) {
-    socket.name = name
+    socket.name = name;
     socket.broadcast.emit('chat message', '--- ' + name + ' entered');
   });
   socket.on('disconnect', function() {
@@ -20,6 +20,9 @@ io.on('connection', function(socket) {
   });
   socket.on('chat message', function(msg) {
     socket.broadcast.emit('chat message', socket.name + '> ' + msg);
+  });
+  socket.on('typing', function(is_typing) {
+    socket.broadcast.emit('typing', socket.name, is_typing);
   });
 });
 
