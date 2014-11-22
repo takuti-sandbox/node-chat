@@ -6,6 +6,10 @@ app.get('/', function(req, res) {
   res.sendFile(__dirname + '/index.html');
 });
 
+app.get('/style.css', function(req, res) {
+  res.sendFile(__dirname + '/style.css');
+});
+
 io.on('connection', function(socket) {
   io.emit('chat message', '> user connected');
   socket.on('disconnect', function() {
