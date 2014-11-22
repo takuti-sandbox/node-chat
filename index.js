@@ -13,13 +13,13 @@ app.get('/style.css', function(req, res) {
 io.on('connection', function(socket) {
   socket.on('enter', function(name) {
     socket.name = name
-    io.emit('chat message', '--- ' + name + ' entered');
+    socket.broadcast.emit('chat message', '--- ' + name + ' entered');
   });
   socket.on('disconnect', function() {
-    io.emit('chat message', '--- ' + socket.name + ' quit');
+    socket.broadcast.emit('chat message', '--- ' + socket.name + ' quit');
   });
   socket.on('chat message', function(msg) {
-    io.emit('chat message', socket.name + '> ' + msg);
+    socket.broadcast.emit('chat message', socket.name + '> ' + msg);
   });
 });
 

@@ -19,8 +19,10 @@
   <script>
     var socket = io();
     $('form').submit(function() {
-      socket.emit('chat message', $('#m').val());
+      var msg = $('#m').val();
       $('#m').val('');
+      $('#messages').append($('<li>').text(msg));
+      socket.emit('chat message', msg);
       return false;
     });
     $('#name').keypress(function(e) {
